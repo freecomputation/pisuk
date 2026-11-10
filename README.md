@@ -1,14 +1,11 @@
-# Pisuk
+# Propagule
 
-Pisuk is the walking harness of Free Computation. Its name is the
-Inuktitut root pisuk-, "to be walking", and walking is what it
-does: it carries a person's computing from machine to machine, so
-the machine is the harness and not the hardware in front of them.
-
-In the system prose of Optic, Pisuk is carry-system. The explicit
-name says what it does: it carries the system from host to host
-unchanged. The codename Pisuk remains the repo handle, at
-freecomputation/pisuk, because a repo slug is an address.
+Propagule is the walking harness of Free Computation. The name is
+the biological term for the unit by which an organism travels: a
+propagule detaches, is carried, and grows into the same organism
+on arrival. That is the mechanism here - a kit is sealed on one
+machine, carried, and runs identically on the next, so the
+machine is the harness and not the hardware in front of them.
 
 The design is in DESIGN.md. In one paragraph: three of idem's
 tools - the grower, the broker, the runner - and a
@@ -21,9 +18,9 @@ desktop, the laptop, and the old ThinkPad.
 
 ## The shell
 
-"pisuk seal --kit <dir>" writes the kit manifest, pisuk.json,
-pinning grower, broker, and runner by sha256. "pisuk verify
---kit <dir>" checks a kit against its manifest. "pisuk run
+"propagule seal --kit <dir>" writes the kit manifest, propagule.json,
+pinning grower, broker, and runner by sha256. "propagule verify
+--kit <dir>" checks a kit against its manifest. "propagule run
 --kit <dir> --store <dir> --object <sha256>" verifies the kit,
 then runs the named component out of the carried store through
 the verified runner, under the runner's fuel meter. A kit whose

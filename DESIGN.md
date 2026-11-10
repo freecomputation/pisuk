@@ -1,13 +1,11 @@
-# Pisuk - carry-system - design
+# Propagule - design
 
-In the system prose of Optic, Pisuk is carry-system: it carries
-the system from host to host unchanged. Pisuk is the codename
-and the repo handle.
-
-Pisuk is the walking harness of Free Computation. Its name is the
-Inuktitut root pisuk-, "to be walking", and walking is what it
-does: it carries a person's computing from machine to machine, so
-the machine is the harness and not the hardware in front of them.
+Propagule is the walking harness of Free Computation. The name is
+the biological term for the unit by which an organism travels: a
+propagule detaches, is carried, and grows into the same organism
+on arrival. That is the mechanism here - a kit is sealed on one
+machine, carried, and runs identically on the next, so the
+machine is the harness and not the hardware in front of them.
 
 ## The idea
 
@@ -23,17 +21,17 @@ This is what "running FreeBSD on the Mac" means here: the
 environment arrives whole and identical, as editions and grown
 derivations, rather than being installed per machine and drifting
 per machine. The kernel is borrowed from the host in the first
-form of Pisuk. A carried system image with a real FreeBSD kernel
+form of Propagule. A carried system image with a real FreeBSD kernel
 inside a virtual machine is a later layer, named in the build
 order below, for the workloads that truly need a kernel of their
 own.
 
 ## The acceptance test
 
-Pisuk inherits idem's law and sharpens it for travel: the same
+Propagule inherits idem's law and sharpens it for travel: the same
 derivation, from the same store, run on any two hosts, returns
 the same result and the same fuel reading. If an answer depends
-on which machine it ran on, it is not Pisuk yet. Every part below
+on which machine it ran on, it is not Propagule yet. Every part below
 exists to make that sentence true.
 
 ## The form
@@ -63,9 +61,9 @@ system it carries does not.
 
 idem's system phase waits on two things that are not code: a
 hardware census on the owner's machines, and the FreeBSD bedrock
-that follows from it. Pisuk needs neither. It runs on the systems
+that follows from it. Propagule needs neither. It runs on the systems
 people already have - the same ruling that put Umiak first - and
-when the bedrock arrives, Pisuk is how it will travel: the system
+when the bedrock arrives, Propagule is how it will travel: the system
 grown once, walked everywhere.
 
 ## Build order
@@ -91,7 +89,7 @@ shell there is the harder fitting to prove early.
 edition sync on Umiak's chunk machinery as the standing second
 step, not a new mechanism.
 - Whether v0's shell is one binary beside idem's three tools or a
-fourth crate in the idem tree while Pisuk is young - recommended:
+fourth crate in the idem tree while Propagule is young - recommended:
 its own repository from the start, since Chase has made one, with
 the runner and broker shared by path until they are worth a
 library.

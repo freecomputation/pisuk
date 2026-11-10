@@ -1,6 +1,6 @@
-// Pisuk: the walking harness.
+// Propagule: the walking harness.
 //
-// The machine is the harness, not the hardware. Pisuk carries
+// The machine is the harness, not the hardware. Propagule carries
 // three of idem's tools - the grower, the broker, the runner - and
 // a content-addressed store, and it walks them from host to host.
 // The host lends its processor; everything above that line is
@@ -8,15 +8,15 @@
 //
 // This shell is the only per-host code, and it is kept small on
 // purpose. It does three things. It seals a kit: a manifest
-// (pisuk.json) pinning the tools it walks with by hash. It
+// (propagule.json) pinning the tools it walks with by hash. It
 // verifies a kit before anything runs: a tampered tool means the
 // harness is not itself today, and it refuses. And it runs: a
 // component out of a carried store, through the verified runner,
 // under the runner's own meter.
 //
-//   pisuk seal --kit <dir>
-//   pisuk verify --kit <dir>
-//   pisuk run --kit <dir> --store <dir> --object <sha256> [--fuel N]
+//   propagule seal --kit <dir>
+//   propagule verify --kit <dir>
+//   propagule run --kit <dir> --store <dir> --object <sha256> [--fuel N]
 //
 // The acceptance test from the design: the same derivation, from
 // the same store, run through kits at two different places,
@@ -30,7 +30,7 @@ use std::process::{exit, Command};
 const TOOLS: [&str; 3] = ["grower", "broker", "runner"];
 
 fn fail(msg: &str) -> ! {
-    eprintln!("pisuk: {msg}");
+    eprintln!("propagule: {msg}");
     exit(1);
 }
 
@@ -59,7 +59,16 @@ struct ToolPin {
 }
 
 fn manifest_path(kit: &Path) -> PathBuf {
-    kit.join("pisuk.json")
+    let current = kit.join("propagule.json");
+    if current.exists() {
+        return current;
+    }
+    // Kits sealed before the rename carry pisuk.json; they still walk.
+    let legacy = kit.join("pisuk.json");
+    if legacy.exists() {
+        return legacy;
+    }
+    current
 }
 
 fn cmd_seal(kit: &Path) {
@@ -79,7 +88,7 @@ fn cmd_seal(kit: &Path) {
         });
     }
     let manifest = KitManifest {
-        format: "pisuk-kit/0".to_string(),
+        format: "propagule-kit/0".to_string(),
         tools,
     };
     let text = serde_json::to_string_pretty(&manifest).unwrap();
@@ -90,11 +99,11 @@ fn cmd_seal(kit: &Path) {
 
 fn verify_kit(kit: &Path) -> KitManifest {
     let text = std::fs::read_to_string(manifest_path(kit)).unwrap_or_else(|_| {
-        fail("kit carries no pisuk.json - seal it first, and do not walk with an unsealed kit")
+        fail("kit carries no propagule.json - seal it first, and do not walk with an unsealed kit")
     });
     let manifest: KitManifest =
         serde_json::from_str(&text).unwrap_or_else(|e| fail(&format!("kit manifest unreadable: {e}")));
-    if manifest.format != "pisuk-kit/0" {
+    if manifest.format != "propagule-kit/0" && manifest.format != "pisuk-kit/0" {
         fail(&format!("unknown kit format {}", manifest.format));
     }
     for pin in &manifest.tools {
@@ -150,9 +159,9 @@ fn flag(args: &[String], name: &str) -> Option<String> {
 
 fn usage() -> ! {
     eprintln!("usage:");
-    eprintln!("  pisuk seal --kit <dir>");
-    eprintln!("  pisuk verify --kit <dir>");
-    eprintln!("  pisuk run --kit <dir> --store <dir> --object <sha256> [--fuel N]");
+    eprintln!("  propagule seal --kit <dir>");
+    eprintln!("  propagule verify --kit <dir>");
+    eprintln!("  propagule run --kit <dir> --store <dir> --object <sha256> [--fuel N]");
     exit(2);
 }
 
